@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(Cinema.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Multiplex.Repo, :manual)

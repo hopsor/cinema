@@ -1,4 +1,4 @@
-# Cinema
+# Multiplex
 
 To start your Phoenix server:
 

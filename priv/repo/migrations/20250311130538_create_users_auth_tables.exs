@@ -1,4 +1,4 @@
-defmodule Cinema.Repo.Migrations.CreateUsersAuthTables do
+defmodule Multiplex.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

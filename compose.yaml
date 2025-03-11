@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: cinema_postgres
+    container_name: multiplex_postgres
     image: postgres:latest
     environment:
       - POSTGRES_USER=${POSTGRES_USER}

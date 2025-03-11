@@ -1,9 +1,9 @@
-defmodule Cinema.MixProject do
+defmodule Multiplex.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :cinema,
+      app: :multiplex,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule Cinema.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Cinema.Application, []},
+      mod: {Multiplex.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -45,12 +45,7 @@ defmodule Cinema.MixProject do
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:heroicons,
-       github: "tailwindlabs/heroicons",
-       tag: "v2.1.1",
-       sparse: "optimized",
-       app: false,
-       compile: false,
-       depth: 1},
+       github: "tailwindlabs/heroicons", tag: "v2.1.1", sparse: "optimized", app: false, compile: false, depth: 1},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},
@@ -79,10 +74,10 @@ defmodule Cinema.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind cinema", "esbuild cinema"],
+      "assets.build": ["tailwind multiplex", "esbuild multiplex"],
       "assets.deploy": [
-        "tailwind cinema --minify",
-        "esbuild cinema --minify",
+        "tailwind multiplex --minify",
+        "esbuild multiplex --minify",
         "phx.digest"
       ]
     ]

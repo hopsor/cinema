@@ -1,7 +1,7 @@
-defmodule Cinema.TheaterFixtures do
+defmodule Multiplex.TheaterFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Cinema.Theater` context.
+  entities via the `Multiplex.Theater` context.
   """
 
   @doc """
@@ -14,7 +14,7 @@ defmodule Cinema.TheaterFixtures do
         duration: 42,
         title: "some title"
       })
-      |> Cinema.Theater.create_movie()
+      |> Multiplex.Theater.create_movie()
 
     movie
   end
