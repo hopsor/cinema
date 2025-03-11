@@ -18,16 +18,18 @@ defmodule CinemaWeb.Router do
   end
 
   scope "/", CinemaWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_user]
 
     get "/", PageController, :home
 
-    live "/movies", MovieLive.Index, :index
-    live "/movies/new", MovieLive.Index, :new
-    live "/movies/:id/edit", MovieLive.Index, :edit
+    live_session :default, on_mount: [CinemaWeb.UserLiveAuth] do
+      live "/movies", MovieLive.Index, :index
+      live "/movies/new", MovieLive.Index, :new
+      live "/movies/:id/edit", MovieLive.Index, :edit
 
-    live "/movies/:id", MovieLive.Show, :show
-    live "/movies/:id/show/edit", MovieLive.Show, :edit
+      live "/movies/:id", MovieLive.Show, :show
+      live "/movies/:id/show/edit", MovieLive.Show, :edit
+    end
   end
 
   # Other scopes may use custom stacks.
