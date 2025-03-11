@@ -1,0 +1,47 @@
+<.header>
+  Listing Movies
+  <:actions>
+    <.link patch={~p"/movies/new"}>
+      <.button>New Movie</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="movies"
+  rows={@streams.movies}
+  row_click={fn {_id, movie} -> JS.navigate(~p"/movies/#{movie}") end}
+>
+  <:col :let={{_id, movie}} label="Title">{movie.title}</:col>
+  <:col :let={{_id, movie}} label="Duration">{movie.duration}</:col>
+  <:action :let={{_id, movie}}>
+    <div class="sr-only">
+      <.link navigate={~p"/movies/#{movie}"}>Show</.link>
+    </div>
+    <.link patch={~p"/movies/#{movie}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, movie}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: movie.uuid}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="movie-modal"
+  show
+  on_cancel={JS.patch(~p"/movies")}
+>
+  <.live_component
+    module={CinemaWeb.MovieLive.FormComponent}
+    id={@movie.uuid || :new}
+    title={@page_title}
+    action={@live_action}
+    movie={@movie}
+    patch={~p"/movies"}
+  />
+</.modal>
