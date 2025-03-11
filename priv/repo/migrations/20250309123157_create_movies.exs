@@ -1,4 +1,4 @@
-defmodule Cinema.Repo.Migrations.CreateMovies do
+defmodule Multiplex.Repo.Migrations.CreateMovies do
   use Ecto.Migration
 
   def change do

@@ -1,4 +1,4 @@
-defmodule Cinema.Repo.Migrations.CreateSchemaProjectionVersions do
+defmodule Multiplex.Repo.Migrations.CreateSchemaProjectionVersions do
   use Ecto.Migration
 
   def change do

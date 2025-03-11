@@ -1,3 +1,3 @@
 export POSTGRES_USER=postgres
 export POSTGRES_PW=postgres
-export POSTGRES_DB=cinema
+export POSTGRES_DB=multiplex
