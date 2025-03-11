@@ -7,9 +7,16 @@
 # General application configuration
 import Config
 
-config :cinema,
-  ecto_repos: [Cinema.Repo],
-  generators: [timestamp_type: :utc_datetime]
+# Configures the mailer
+#
+# By default it uses the "Local" adapter which stores the emails
+# locally. You can see the emails in your browser, at "/dev/mailbox".
+#
+# For production it's recommended to configure a different adapter
+# at the `config/runtime.exs`.
+config :cinema, Cinema.Mailer, adapter: Swoosh.Adapters.Local
+config :cinema, Cinema.Repo, migration_foreign_key: [column: :uuid, type: :binary_id]
+config :cinema, Cinema.Repo, migration_primary_key: [name: :uuid, type: :binary_id]
 
 # Configures the endpoint
 config :cinema, CinemaWeb.Endpoint,
@@ -22,24 +29,28 @@ config :cinema, CinemaWeb.Endpoint,
   pubsub_server: Cinema.PubSub,
   live_view: [signing_salt: "Lp6VZHML"]
 
-# Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
-config :cinema, Cinema.Mailer, adapter: Swoosh.Adapters.Local
+config :cinema,
+  ecto_repos: [Cinema.Repo],
+  generators: [timestamp_type: :utc_datetime]
+
+config :cinema, event_stores: [Cinema.EventStore]
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
   cinema: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
+
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
+
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
 
 # Configure tailwind (the version is required)
 config :tailwind,
@@ -52,18 +63,6 @@ config :tailwind,
     ),
     cd: Path.expand("../assets", __DIR__)
   ]
-
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
-# Use Jason for JSON parsing in Phoenix
-config :phoenix, :json_library, Jason
-
-config :cinema, Cinema.Repo, migration_primary_key: [name: :uuid, type: :binary_id]
-
-config :cinema, event_stores: [Cinema.EventStore]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
